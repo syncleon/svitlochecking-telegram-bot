@@ -13,6 +13,8 @@ private val channelId: ChatId = ChatId.ChannelUsername(map["channelId"].toString
 private val ip: String = map["ip"].toString()
 private val botToken: String = map["token"].toString()
 
+private val command = arrayOf("ping", ip)
+
 private var bufferTime: Long = 0L
 
 const val WELCOME_TEXT: String = "\nВітаю! Цей бот створенний для перевірки наявності електроенергії "
@@ -28,7 +30,7 @@ fun main() {
     val bot = bot {
         token = botToken
     }
-    var state = getConnectionState(ip)
+    var state = getConnectionState()
     bot.sendMessage(channelId, buildWelcomeMessage(state))
     while (true) {
         state = checkStateAndSendMessage(state, bot)
@@ -37,12 +39,13 @@ fun main() {
 }
 
 private fun checkStateAndSendMessage(previousState: Boolean, bot: Bot): Boolean {
-    val newState = getConnectionState(ip)
+    val newState = getConnectionState()
     if (previousState != newState) {
         bot.sendMessage(channelId, buildOutputMessage(newState))
     }
     return newState
 }
+
 private fun buildOutputMessage(state: Boolean): String {
     val currentTime = System.currentTimeMillis()
     val s: String = if (state) {
@@ -101,19 +104,29 @@ private fun formatOutputDate(milliseconds: Long): String? {
     return sdf.format(resultDate)
 }
 
-private fun getConnectionState(ip: String): Boolean {
-    var s = ""
-    val command = arrayOf("ping", ip)
-    for (retry in 1..5) {
-        val p: Process = Runtime.getRuntime().exec(command)
-        val inputStream = BufferedReader(InputStreamReader(p.inputStream))
-        for (i in 0..1) {
-            s = inputStream.readLine()
-        }
-        p.destroy()
+private fun getConnectionState(): Boolean {
+    var count = 0
+    var state: Boolean
+    while (count < 5) {
+        state = getHostState()
+        if (state) break
+        count++
         Thread.sleep(5000)
     }
+    return getHostState()
+}
+
+private fun getHostState(): Boolean {
+    var s = ""
+    val p: Process = Runtime.getRuntime().exec(command)
+    val inputStream = BufferedReader(InputStreamReader(p.inputStream))
+    for (i in 0..1) {
+        s = inputStream.readLine()
+    }
+    p.destroy()
     return !s.contains("timeout")
 }
+
+
 
 
