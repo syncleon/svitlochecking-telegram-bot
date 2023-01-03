@@ -30,7 +30,7 @@ fun main() {
     val bot = bot {
         token = botToken
     }
-    var state = getConnectionState()
+    var state = getStateWithRetry()
     bot.sendMessage(channelId, buildWelcomeMessage(state))
     while (true) {
         state = checkStateAndSendMessage(state, bot)
@@ -39,7 +39,7 @@ fun main() {
 }
 
 private fun checkStateAndSendMessage(previousState: Boolean, bot: Bot): Boolean {
-    val newState = getConnectionState()
+    val newState = getStateWithRetry()
     if (previousState != newState) {
         bot.sendMessage(channelId, buildOutputMessage(newState))
     }
@@ -104,19 +104,19 @@ private fun formatOutputDate(milliseconds: Long): String? {
     return sdf.format(resultDate)
 }
 
-private fun getConnectionState(): Boolean {
+private fun getStateWithRetry(): Boolean {
     var count = 0
     var state: Boolean
     while (count < 5) {
-        state = getHostState()
+        state = getHostCurrentState()
         if (state) break
         count++
         Thread.sleep(5000)
     }
-    return getHostState()
+    return getHostCurrentState()
 }
 
-private fun getHostState(): Boolean {
+private fun getHostCurrentState(): Boolean {
     var s = ""
     val p: Process = Runtime.getRuntime().exec(command)
     val inputStream = BufferedReader(InputStreamReader(p.inputStream))
