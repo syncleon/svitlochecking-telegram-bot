@@ -105,12 +105,12 @@ private fun formatOutputDate(milliseconds: Long): String? {
 }
 
 private fun getStateWithRetry(): Boolean {
-    var count = 0
+    var retry = 0
     var state: Boolean
-    while (count < 5) {
+    while (retry < 5) {
         state = getHostCurrentState()
         if (state) break
-        count++
+        retry++
         Thread.sleep(5000)
     }
     return getHostCurrentState()
