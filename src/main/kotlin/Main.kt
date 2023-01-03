@@ -29,7 +29,7 @@ fun main() {
         token = botToken
     }
     var state = getConnectionState(ip)
-    bot.sendMessage(channelId, sendWelcomeMessage(state))
+    bot.sendMessage(channelId, buildWelcomeMessage(state))
     while (true) {
         state = checkStateAndSendMessage(state, bot)
         Thread.sleep(60000)
@@ -39,11 +39,11 @@ fun main() {
 private fun checkStateAndSendMessage(previousState: Boolean, bot: Bot): Boolean {
     val newState = getConnectionState(ip)
     if (previousState != newState) {
-        bot.sendMessage(channelId, sendMessage(newState))
+        bot.sendMessage(channelId, buildOutputMessage(newState))
     }
     return newState
 }
-private fun sendMessage(state: Boolean): String {
+private fun buildOutputMessage(state: Boolean): String {
     val currentTime = System.currentTimeMillis()
     val s: String = if (state) {
         buildString {
@@ -66,7 +66,7 @@ private fun sendMessage(state: Boolean): String {
     return s
 }
 
-private fun sendWelcomeMessage(state: Boolean): String {
+private fun buildWelcomeMessage(state: Boolean): String {
     val s: String = if (state) {
         buildString {
             append(WELCOME_TEXT)
