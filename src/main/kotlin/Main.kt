@@ -101,7 +101,7 @@ private fun formatOutputDiff(updated: Long, previous: Long): String {
 private fun formatOutputDate(milliseconds: Long): String? {
     val sdf = SimpleDateFormat("HH:mm dd/MM/yy")
     val resultDate = Date(milliseconds)
-    sdf.timeZone = TimeZone.getTimeZone("UTC+2")
+    sdf.timeZone = TimeZone.getTimeZone("EET")
     return sdf.format(resultDate)
 }
 
