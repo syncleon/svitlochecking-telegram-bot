@@ -13,7 +13,7 @@ private val channelId: ChatId = ChatId.ChannelUsername(map["channelId"].toString
 private val ip: String = map["ip"].toString()
 private val botToken: String = map["token"].toString()
 
-private val command = arrayOf("ping", ip)
+private val command = arrayOf("ping", "-w", "5", ip)
 
 private var bufferTime: Long = 0L
 
@@ -126,7 +126,4 @@ private fun getStatus(): Boolean {
     p.destroy()
     return s.contains("time")
 }
-
-
-
 
