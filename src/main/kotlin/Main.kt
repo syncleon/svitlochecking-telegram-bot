@@ -106,14 +106,14 @@ private fun formatOutputDate(milliseconds: Long): String? {
 
 private fun getConnectionState(): Boolean {
     var retry = 0
-    var state: Boolean
+    var state = false
     while (retry < 5) {
         state = getStatus()
         if (state) break
         retry++
         Thread.sleep(5000)
     }
-    return getStatus()
+    return state
 }
 
 private fun getStatus(): Boolean {
@@ -124,7 +124,7 @@ private fun getStatus(): Boolean {
         s = inputStream.readLine()
     }
     p.destroy()
-    return !s.contains("timeout")
+    return s.contains("time")
 }
 
 
