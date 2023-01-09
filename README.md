@@ -23,7 +23,7 @@ ip: your provider IP address.
 ```
 3. run task ```./gradlew run```
 
-<img src="https://user-images.githubusercontent.com/114079662/211294636-831a9046-2bd9-4a59-887c-1d89b9b91852.png" width="300">
+<img src="https://user-images.githubusercontent.com/114079662/211294636-831a9046-2bd9-4a59-887c-1d89b9b91852.png" width="500">
 
 ### Based on
 https://github.com/kotlin-telegram-bot/kotlin-telegram-bot
