@@ -9,7 +9,7 @@ Bot sending message on your ```channelId``` in format:
 Message generate depending on result of ping your provider IP address.
 
 ## Requirements 
-* java *>9*
+* Java *>9*
 * Gradle *>6.9*
 ## Usage
 1. Clone **repo**.
