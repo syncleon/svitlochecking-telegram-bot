@@ -19,7 +19,7 @@ token: Your telegram-bot token.
 channelId: Channelname to publish in format "@channelname".
 ip: your provider IP address.
 ```
-3. run task ```./gradlew run```
+3. Run task from terminal ```./gradlew run```
 
 <img src="https://user-images.githubusercontent.com/114079662/211294636-831a9046-2bd9-4a59-887c-1d89b9b91852.png" width="500">
 
