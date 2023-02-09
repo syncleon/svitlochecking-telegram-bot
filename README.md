@@ -6,7 +6,7 @@ Bot sending message on your ```channelId``` in format:
 Час включення/відключення: HH:mm dd/MM/yy (Time state changes HH:mm dd/MM/yy)
 Світло було/Світла не було протягом: HH годин і mm хвилин. (During period of time HH:mm)
 ```
-Message generate depending on result of ping your provider IP address.
+Message generate depending on availablility (ping ip) your provider IP address.
 
 ## Requirements 
 * Java *>9*
